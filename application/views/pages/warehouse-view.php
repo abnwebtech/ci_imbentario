@@ -11,6 +11,7 @@
                     <th>WAREHOUSE NAME</th>
                     <th>SHORT NAME</th>
                     <th>ADDRESS</th>
+                    <th>STATUS</th>
                 </tr>
             </thead>
             <tbody>
@@ -20,9 +21,10 @@
                         <a href="<?php echo site_url('warehouses/edit/'.$warehouse['id']); ?>">Edit</a>
                     </td>
                     <!--<td><?php echo $warehouse['id']; ?></td>-->
-                    <td><?php echo $warehouse['warehouse_name']; ?></td>
+                    <td><?php echo $warehouse['name']; ?></td>
                     <td><?php echo $warehouse['short_name']; ?></td>
                     <td><?php echo $warehouse['address']; ?></td>
+                    <td><?php echo $warehouse['active_status']; ?></td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>

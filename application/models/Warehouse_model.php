@@ -19,16 +19,24 @@ class Warehouse_model extends MY_Model {
     /**
      * Callbacks or Observers
      */
-    protected $before_create = ['generate_date_created_status'];
+    protected $before_create = ['set_data_before_create'];
+    protected $before_update = ['set_data_before_update'];
     protected $after_get     = ['set_default_data'];
     protected $after_create  = ['write_audit_trail'];
     protected $after_update  = ['write_audit_trail'];
 
-    protected function generate_date_created_status($warehouse)
+    protected function set_data_before_create($warehouse)
     {
         $warehouse['active_status'] = 1;
-        $warehouse['created_by']    = 0;
+        $warehouse['created_by']    = $this->ion_auth->user()->row()->id;
         $warehouse['created']       = date('Y-m-d H:i:s');
+        return $warehouse;
+    }
+
+    protected function set_data_before_update($warehouse)
+    {
+        $warehouse['modified_by'] = $this->ion_auth->user()->row()->id;
+        $warehouse['modified']    = date('Y-m-d H:i:s');
         return $warehouse;
     }
 
