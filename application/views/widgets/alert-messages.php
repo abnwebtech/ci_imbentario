@@ -39,5 +39,11 @@
                 notification.sound();
             </script>
         <?php endif; ?>
+        <?php if ($this->session->flashdata('try_again')): ?>
+            <script>
+                toastr.warning('<?php echo $this->session->flashdata('try_again'); ?>', 'TRY AGAIN:');
+                notification.sound();
+            </script>
+        <?php endif; ?>
     </div>
 </div>

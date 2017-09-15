@@ -13,14 +13,24 @@ class Warehouses extends MY_Controller {
 	{
 		parent::__construct();
 		$this->load->model('warehouse_model');
+		
+		$this->load->model('bented_model');
       	$this->load->helper(array('form','url'));
 		$this->load->library('form_validation');
 	}
  
 	function index()
 	{
-		$data['warehouses'] = $this->warehouse_model->get_warehouses();
-      	$this->load->view('pages/warehouse-view', $data);
+		$warehouses = $this->warehouse_model->get_warehouses();
+		$positions = $this->bented_model->get_by(array('id'=>1));
+
+		$this->data = array(
+            'page_header' 	=> 'Warehouse Management',
+            'notification' 	=> array("sound"=>false),
+			'warehouses' 	=> $warehouses, 
+			'positions'		=> $positions
+        );
+      	$this->load_view('pages/warehouse-view');
 	}
  
 	/**
@@ -114,6 +124,7 @@ class Warehouses extends MY_Controller {
            echo 'Successfully added new Warehouse<br>';
             echo anchor('warehouses/index', 'View List');
         }
+   }
 }
 // End of file Warehouses.php
 // Location: ./application/controller/Warehouses.php
