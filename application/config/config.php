@@ -30,6 +30,11 @@ $config['base_url'] = "http" . ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] =
 $config['base_url'] .= preg_replace('@/+$@', '', dirname($_SERVER['SCRIPT_NAME'])) . '/';
 }
 
+if (isset($_SERVER['REQUEST_URI'])) {
+	$config['base_url'] = "http" . ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 's' : '') . "://" . $_SERVER['HTTP_HOST'];
+	$config['base_url'] .= preg_replace('@/+$@', '', dirname($_SERVER['SCRIPT_NAME'])) . '/';
+}
+
 /*
 |--------------------------------------------------------------------------
 | Index File
@@ -40,7 +45,7 @@ $config['base_url'] .= preg_replace('@/+$@', '', dirname($_SERVER['SCRIPT_NAME']
 | variable so that it is blank.
 |
 */
-$config['index_page'] = 'index.php';
+$config['index_page'] = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -329,7 +334,7 @@ $config['cache_query_string'] = FALSE;
 | https://codeigniter.com/user_guide/libraries/encryption.html
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = 'systemantech-lohica-imbentario';
 
 /*
 |--------------------------------------------------------------------------
