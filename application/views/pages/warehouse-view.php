@@ -15,10 +15,13 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($warehouses as $warehouse): ?>
+                <?php foreach($warehouses as $index => $warehouse): ?>
                 <tr>
                     <td>
-                        <a href="<?php echo site_url('warehouses/edit/'.$warehouse['id']); ?>">Edit</a>
+			            <a href="<?php echo site_url('warehouses/confirmation/edit/' . $warehouse['id']); ?>" data-toggle="modal" data-target="#modal-confirmation-<?php echo $index; ?>">
+                            <i class="fa fa-pencil"></i>
+                         	<span>Edit</span>
+                        </a>
                     </td>
                     <!--<td><?php echo $warehouse['id']; ?></td>-->
                     <td><?php echo $warehouse['name']; ?></td>
@@ -26,7 +29,19 @@
                     <td><?php echo $warehouse['address']; ?></td>
                     <td><?php echo $warehouse['active_status']; ?></td>
                 </tr>
+                            <div class="modal fade" id="modal-confirmation-<?php echo $index; ?>">
+                                <div class="modal-dialog">
+                                    <div class="modal-content"></div>
+                                </div>
+                            </div>
+			
                 <?php endforeach; ?>
+                            <?php if (empty($warehouses)): ?>
+                            <tr class="text-center">
+                                <td colspan="3">-- NO RECORD FOUND --</td>
+                            </tr>
+                            <?php endif; ?>
+
             </tbody>
         </table>
     </div>

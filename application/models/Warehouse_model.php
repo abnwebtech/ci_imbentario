@@ -27,6 +27,8 @@ class Warehouse_model extends MY_Model {
 
     protected function set_data_before_create($warehouse)
     {
+        if ( ! isset($warehouse)) return FALSE;
+
         $warehouse['active_status'] = 1;
         $warehouse['created_by']    = $this->ion_auth->user()->row()->id;
         $warehouse['created']       = date('Y-m-d H:i:s');

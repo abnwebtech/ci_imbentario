@@ -57,10 +57,27 @@ class Warehouses extends MY_Controller {
 	 * @return
 	 */
 	function confirmation()
-	{
-		$object_id = $this->uri->segment(3);
-		// code here...
-	}
+	    {
+        $url         = $this->uri->segment(3);
+        $id 		 = $this->uri->segment(4);
+
+        $mode = explode('_', $url);
+        
+        $warehouse = $this->warehouse_model->get($id);
+        
+        $type = 'Warehouse named <strong>' . $warehouse['name'] . '</strong>';
+		$modal_message = sprintf(lang('confirmation_message'), $mode[0], $type);
+
+		$data = array(
+			'url' 			=> 'warehouses/' . $url . '/' . $id,
+			'modal_title' 	=> ucfirst($mode[0]),
+			'modal_message' => $modal_message,
+			'mode'			=> $mode[0]
+		);
+
+		$this->load->view('modals/modal-confirmation', $data);
+            
+    }
  
 	/**
 	 * Some description here
@@ -71,6 +88,7 @@ class Warehouses extends MY_Controller {
 	 */
 	function edit($warehouse_id)
 	{
+		$primary_id = $this->uri->segment(3);
         $warehouse = $this->warehouse_model->get_by(array('id'=>$warehouse_id));
         
 		$this->data = array(
@@ -142,12 +160,12 @@ class Warehouses extends MY_Controller {
 			if($mode=='add'){
 				$result = $this->warehouse_model->insert($post);
 				if($result){
-					$this->session->set_flashdata('success', lang('success_message'));
+					$this->session->set_flashdata('success', lang('add_warehouse_success'));
 					redirect('warehouses');
 		
 				}
 				else{
-					$this->session->set_flashdata('error', lang('error_message'));
+					$this->session->set_flashdata('error', lang('add_warehouse_error'));
 					redirect('warehouses');
 				}
 			}
@@ -158,12 +176,12 @@ class Warehouses extends MY_Controller {
 				$result = $this->warehouse_model->update($id, $post);
 
 				if($result){
-					$this->session->set_flashdata('success', lang('success_message_edit_warehouse'));
+					$this->session->set_flashdata('success', lang('edit_warehouse_success'));
 					redirect('warehouses');
-		
+					
 				}
 				else{
-					$this->session->set_flashdata('error', lang('error_message'));
+					$this->session->set_flashdata('error', lang('edit_warehouse_error'));
 					redirect('warehouses');
 				}
 			}
