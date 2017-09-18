@@ -158,7 +158,7 @@ class Warehouses extends MY_Controller {
 				$result = $this->warehouse_model->update($id, $post);
 
 				if($result){
-					$this->session->set_flashdata('success', lang('success_message'));
+					$this->session->set_flashdata('success', lang('success_message_edit_warehouse'));
 					redirect('warehouses');
 		
 				}
