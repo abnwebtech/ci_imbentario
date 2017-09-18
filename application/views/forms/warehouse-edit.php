@@ -1,5 +1,6 @@
 
 <form class="form-horizontal" action="<?php echo site_url('warehouses/save'); ?>" method="post">
+
    <div class="form-group">
         <label class="control-label col-sm-3">Warehouse Name:</label>
         <div class="col-sm-7">
