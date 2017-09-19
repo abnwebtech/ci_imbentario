@@ -44,8 +44,11 @@ class Warehouse_model extends MY_Model {
 
     protected function set_default_data($warehouse)
     {
-        $warehouse['active_status']  = ($warehouse['active_status'] == 1) ? 'Active' : 'Inactive';
-        $warehouse['status_label']   = ($warehouse['active_status'] == 'Active') ? 'De-activate' : 'Activate';
+        //$warehouse['active_status']  = ($warehouse['active_status'] == 1) ? 'Active' : 'Inactive';
+        $warehouse['status_label']   = ($warehouse['active_status'] == 1) ? '<span class="label label-success">Active</span>' : '<span class="label label-danger">Inactive</span>';
+        $warehouse['status_url'] 	 = ($warehouse['active_status'] == 1) ? 'deactivate' : 'activate';
+        $warehouse['status_action']  = ($warehouse['active_status'] == 1) ? 'Deactivate' : 'Activate';
+		$warehouse['status_icon']    = ($warehouse['active_status'] == 1) ? 'fa-times text-red' : 'fa-check text-green';
         return $warehouse;
     }
 

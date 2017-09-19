@@ -62,6 +62,8 @@ class Warehouses extends MY_Controller {
         $id 		 = $this->uri->segment(4);
 
         $mode = explode('_', $url);
+
+		// dump($mode);exit;
         
         $warehouse = $this->warehouse_model->get($id);
         
@@ -74,9 +76,7 @@ class Warehouses extends MY_Controller {
 			'modal_message' => $modal_message,
 			'mode'			=> $mode[0]
 		);
-
-		$this->load->view('modals/modal-confirmation', $data);
-            
+		$this->load->view('modals/modal-confirmation', $data);            
     }
  
 	/**
@@ -109,10 +109,19 @@ class Warehouses extends MY_Controller {
 	 * @param
 	 * @return
 	 */
-	function activate()
+	function activate($warehouse_id)
 	{
 		$object_id = $this->uri->segment(3);
-		// code here...
+		$warehouse    = $this->warehouse_model->get_many_warehouse_by(['id' => $warehouse_id]);
+		$update    = $this->warehouse_model->update($warehouse_id, ['active_status' => 1]);
+
+		if ($update) {
+			$this->session->set_flashdata('success', 'Successfully Activated warehouse ' . $warehouse['name']);
+			redirect('warehouses');
+		} else {
+			$this->session->set_flashdata('failed', 'Unable to Activate warehouse ' . $warehouse['name']);
+			redirect('warehouses');
+		}
 	}
  
 	/**
@@ -122,10 +131,19 @@ class Warehouses extends MY_Controller {
 	 * @param
 	 * @return
 	 */
-	function deactivate()
+	function deactivate($warehouse_id)
 	{
 		$object_id = $this->uri->segment(3);
-		// code here...
+		$warehouse    	= $this->warehouse_model->get_many_warehouse_by(['id' => $warehouse_id]);
+		$update    		= $this->warehouse_model->update($warehouse_id, ['active_status' => 0]);
+
+		if ($update) {
+			$this->session->set_flashdata('success', $warehouse['name'] . 'successfully Deactivated warehouse ');
+			redirect('warehouses');
+		} else {
+			$this->session->set_flashdata('failed', 'Unable to Deactivate warehouse ' . $warehouse['name']);
+			redirect('warehouses');
+		}
 	}
 
 	/**

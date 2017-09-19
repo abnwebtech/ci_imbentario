@@ -1,16 +1,4 @@
 <div class='row'>
-<<<<<<< HEAD
-	<div class='col-sm-12'>
-		<div class='box box-primary'>
-			<div class='box-header'>
-				<h4 class='box-title'>Box Panel Title</h4>
-			</div>
-			<div class='box-body'>
-				<p>Put some content here</p>
-			</div>
-		</div>
-	</div>
-=======
     <div class='col-sm-12'>
         <div class='box box-primary'>
             <div class='box-header'>
@@ -66,5 +54,4 @@
             </div>
         </div>
     </div>
->>>>>>> 0cf955ffd76db954dd4bed6ea3608b4cacb7ef25
 </div>
