@@ -3,7 +3,7 @@
         <a class="btn btn-default" href="<?php echo site_url('warehouses/add'); ?>">ADD WAREHOUSE</a>
         <!--<?php dump($positions); ?>
         <?php echo $positions['modified']; ?>-->
-        <table class="table table-bordered table-striped">
+        <table class="table table-bordered table-striped" id="datatable-warehouses">
             <thead>
                 <tr>
                     <th>ACTION</th>
@@ -29,3 +29,8 @@
         </table>
     </div>
 </div>
+<script>
+    $(function() {
+        $('#datatable-warehouses').DataTable();
+    });
+</script>

@@ -74,8 +74,12 @@ class Departments extends MY_Controller {
      */
     function add_department()
     {
+        $this->load->model('site_model');
+        $sites = $this->site_model->get_many_by(array('active_status' => 1));
+        
         $this->data = array(
-            'page_header' => 'Add New Department'
+            'page_header' => 'Add New Department',
+            'sites' => $sites
         );
 
         $this->load_view('forms/department-add');
