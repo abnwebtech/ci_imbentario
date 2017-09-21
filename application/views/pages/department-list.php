@@ -13,7 +13,7 @@
             <div class='box-body'>
                 <p>Put some content here</p>
                 <div class='table-responsive'>
-                    <table class='table table-bordered table-stripped table-hover' id='datatable-test'>
+                    <table class='table table-bordered table-stripped table-hover' id='datatable-departments'>
                         <thead>
                             <tr>
                                 <th>Action</th>
@@ -55,3 +55,9 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(function() {
+        $('#datatable-departments').DataTable();
+    });
+</script>

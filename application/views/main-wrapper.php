@@ -13,11 +13,15 @@
 		<link rel="stylesheet" type="text/css" href="<?php echo site_url('assets/libs/bower_components/bootstrap/dist/css/bootstrap.css'); ?>">
 		<link rel="stylesheet" type="text/css" href="<?php echo site_url('assets/libs/bower_components/font-awesome/css/font-awesome.min.css'); ?>">
 		<link rel="stylesheet" type="text/css" href="<?php echo site_url('assets/libs/bower_components/toastr/toastr.min.css'); ?>">
+		<link rel="stylesheet" type="text/css" href="<?php echo site_url('assets/libs/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css'); ?>">
 		<link rel="stylesheet" type="text/css" href="<?php echo site_url('assets/libs/dist/css/AdminLTE.css'); ?>">
 		<link rel="stylesheet" type="text/css" href="<?php echo site_url('assets/libs/dist/css/skins/_all-skins.min.css'); ?>">
 
 		<script type="text/javascript" src="<?php echo site_url('assets/libs/bower_components/jquery/dist/jquery.min.js'); ?>"></script>
 		<script type="text/javascript" src="<?php echo site_url('assets/libs/bower_components/bootstrap/dist/js/bootstrap.min.js'); ?>"></script>
+
+		<script type="text/javascript" src="<?php echo site_url('assets/libs/bower_components/datatables.net/js/jquery.dataTables.min.js'); ?>"></script>
+		<script type="text/javascript" src="<?php echo site_url('assets/libs/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js'); ?>"></script>
 		<script type="text/javascript" src="<?php echo site_url('assets/libs/bower_components/toastr/toastr.min.js'); ?>"></script>
 		<script type="text/javascript">
 			var BASE_URL = '<?php echo base_url(); ?>';

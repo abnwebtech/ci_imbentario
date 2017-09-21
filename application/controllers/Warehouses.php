@@ -42,7 +42,15 @@ class Warehouses extends MY_Controller {
 	 */
 	function add()
 	{
-		$this->load->view('forms/warehouse-add');
+		$this->load->model('site_model');
+        $sites = $this->site_model->get_many_by(array('active_status' => 1));
+		
+		$this->data = array(
+            'page_header' 	=> 'Add New Warehouse',
+            'notification' 	=> array("sound"=>false),
+			'sites' => $sites
+        );
+		$this->load_view('forms/warehouse-add');
 	}
  
 	/**
@@ -53,10 +61,27 @@ class Warehouses extends MY_Controller {
 	 * @return
 	 */
 	function confirmation()
-	{
-		$object_id = $this->uri->segment(3);
-		// code here...
-	}
+	    {
+        $url         = $this->uri->segment(3);
+        $id 		 = $this->uri->segment(4);
+
+        $mode = explode('_', $url);
+
+		// dump($mode);exit;
+        
+        $warehouse = $this->warehouse_model->get($id);
+        
+        $type = 'Warehouse named <strong>' . $warehouse['name'] . '</strong>';
+		$modal_message = sprintf(lang('confirmation_message'), $mode[0], $type);
+
+		$data = array(
+			'url' 			=> 'warehouses/' . $url . '/' . $id,
+			'modal_title' 	=> ucfirst($mode[0]),
+			'modal_message' => $modal_message,
+			'mode'			=> $mode[0]
+		);
+		$this->load->view('modals/modal-confirmation', $data);            
+    }
  
 	/**
 	 * Some description here
@@ -67,10 +92,17 @@ class Warehouses extends MY_Controller {
 	 */
 	function edit($warehouse_id)
 	{
-        $data['warehouse_id'] = $warehouse_id;
-        $data['warehouse'] = $this->warehouse_model->get_warehouse($warehouse_id);
-        var_dump($this->db->last_query());
-        $this->load->view('forms/warehouse-edit', $data);
+		$primary_id = $this->uri->segment(3);
+        $warehouse = $this->warehouse_model->get_by(array('id'=>$warehouse_id));
+        
+		$this->data = array(
+            'page_header' 	=> 'Warehouse Edit',
+            'notification' 	=> array("sound"=>false),
+			'warehouse' 	=> $warehouse, 
+			'id'			=> $warehouse_id
+        );
+
+        $this->load_view('forms/warehouse-edit');
 
 	}
  
@@ -81,10 +113,19 @@ class Warehouses extends MY_Controller {
 	 * @param
 	 * @return
 	 */
-	function activate()
+	function activate($warehouse_id)
 	{
 		$object_id = $this->uri->segment(3);
-		// code here...
+		$warehouse    = $this->warehouse_model->get_many_warehouse_by(['id' => $warehouse_id]);
+		$update    = $this->warehouse_model->update($warehouse_id, ['active_status' => 1]);
+
+		if ($update) {
+			$this->session->set_flashdata('success', 'Successfully Activated warehouse ' . $warehouse['name']);
+			redirect('warehouses');
+		} else {
+			$this->session->set_flashdata('failed', 'Unable to Activate warehouse ' . $warehouse['name']);
+			redirect('warehouses');
+		}
 	}
  
 	/**
@@ -94,10 +135,19 @@ class Warehouses extends MY_Controller {
 	 * @param
 	 * @return
 	 */
-	function deactivate()
+	function deactivate($warehouse_id)
 	{
 		$object_id = $this->uri->segment(3);
-		// code here...
+		$warehouse    	= $this->warehouse_model->get_many_warehouse_by(['id' => $warehouse_id]);
+		$update    		= $this->warehouse_model->update($warehouse_id, ['active_status' => 0]);
+
+		if ($update) {
+			$this->session->set_flashdata('success', $warehouse['name'] . 'successfully Deactivated warehouse ');
+			redirect('warehouses');
+		} else {
+			$this->session->set_flashdata('failed', 'Unable to Deactivate warehouse ' . $warehouse['name']);
+			redirect('warehouses');
+		}
 	}
 
 	/**
@@ -107,22 +157,58 @@ class Warehouses extends MY_Controller {
     * @return      return
     */
    public function save()
-
    {
+
+		$this->data=array(
+			'page_header'=>"WAREHOUSE MANAGEMENT"
+		);
         $post = $this->input->post();
-        $this->form_validation->set_rules('warehouse_name', 'Warehouse name', 'required');
+        $this->form_validation->set_rules('name', 'Warehouse name', 'required');
         $this->form_validation->set_rules('short_name', 'Short name', 'required');
         $this->form_validation->set_rules('address', 'Address', 'required');
         //
         if ($this->form_validation->run() == FALSE)
         {
-         $this->load->view('forms/warehouse-add'); 
+			// dump('here');
+        	$this->load_view('forms/warehouse-add'); 
         }
         else
         {
-          $result = $this->warehouse_model->save_warehouse_data($post);
-           echo 'Successfully added new Warehouse<br>';
-            echo anchor('warehouses/index', 'View List');
+			// dump($post);exit;
+
+			$mode=$post['mode'];
+			unset($post['mode']);
+
+			if($mode=='add'){
+				$result = $this->warehouse_model->insert($post);
+				if($result){
+					$this->session->set_flashdata('success', lang('add_warehouse_success'));
+					redirect('warehouses');
+		
+				}
+				else{
+					$this->session->set_flashdata('error', lang('add_warehouse_error'));
+					redirect('warehouses');
+				}
+			}
+			if($mode=='edit'){
+				$id=$post['id'];
+				unset($post['id']);
+
+				$result = $this->warehouse_model->update($id, $post);
+
+				if($result){
+					$this->session->set_flashdata('success', lang('edit_warehouse_success'));
+					redirect('warehouses');
+					
+				}
+				else{
+					$this->session->set_flashdata('error', lang('edit_warehouse_error'));
+					redirect('warehouses');
+				}
+			}
+			
+
         }
    }
 }
