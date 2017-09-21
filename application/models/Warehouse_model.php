@@ -68,8 +68,11 @@ class Warehouse_model extends MY_Model {
 
     public function get_warehouses()
     {
-        $query = $this->db;
-        $query->select('*');
+        $this->db->select('
+            warehouses.*,
+            sites.name as site_name
+        ')
+        ->join('sites', 'sites.id=warehouses.site_id', 'left');
         return $this->get_all();
     }
 }

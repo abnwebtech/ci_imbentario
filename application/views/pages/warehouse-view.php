@@ -24,7 +24,9 @@ $('#datatable-warehouses').DataTable();
                             <th>WAREHOUSE NAME</th>
                             <th>SHORT NAME</th>
                             <th>ADDRESS</th>
+                            <th class="text-center">SITE </th>
                             <th class="text-center">STATUS</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -43,6 +45,7 @@ $('#datatable-warehouses').DataTable();
                             <td><?php echo $warehouse['name']; ?></td>
                             <td><?php echo $warehouse['short_name']; ?></td>
                             <td><?php echo $warehouse['address']; ?></td>
+                            <td class="text-center"><?php echo $warehouse['site_name']; ?></td>
                             <td class="text-center"><?php echo $warehouse['status_label']; ?></td>
                         </tr>
                                     <div class="modal fade" id="modal-confirmation-<?php echo $index; ?>">
@@ -62,3 +65,8 @@ $('#datatable-warehouses').DataTable();
         </table>
     </div>
 </div>
+<script>
+    $(function() {
+        $('#datatable-warehouses').DataTable();
+    });
+</script>

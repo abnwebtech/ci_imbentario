@@ -42,9 +42,13 @@ class Warehouses extends MY_Controller {
 	 */
 	function add()
 	{
+		$this->load->model('site_model');
+        $sites = $this->site_model->get_many_by(array('active_status' => 1));
+		
 		$this->data = array(
-            'page_header' 	=> 'Warehouse Add',
+            'page_header' 	=> 'Add New Warehouse',
             'notification' 	=> array("sound"=>false),
+			'sites' => $sites
         );
 		$this->load_view('forms/warehouse-add');
 	}
